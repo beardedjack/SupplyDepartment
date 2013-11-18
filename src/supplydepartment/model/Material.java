@@ -9,24 +9,24 @@ public class Material {
 	
 	////
 	
-	private List<String> MaterialList = new ArrayList<String>();
+	private List<String> materialList = new ArrayList<String>();
 	
 	////
 	
-	private final Collection<IDepartmentSubscriber> subscribers = new CopyOnWriteArrayList<IDepartmentSubscriber>();
+	private final Collection<DepartmentSubscriber> subscribers = new CopyOnWriteArrayList<DepartmentSubscriber>();
 	
-	private void notifySubscriber(IDepartmentSubscriber subscriber) {
+	private void notifySubscriber(DepartmentSubscriber subscriber) {
 		assert subscriber != null;
 		subscriber.materialChanged(this);
 	}
 	
 	protected void notifySubscribers() {
-		for (final IDepartmentSubscriber subscriber: subscribers) 
+		for (final DepartmentSubscriber subscriber: subscribers) 
 			notifySubscriber(subscriber);
 		
 	}
 
-	public void subscribe(IDepartmentSubscriber subscriber) {
+	public void subscribe(DepartmentSubscriber subscriber) {
 		if (subscriber == null) 
 			throw new NullPointerException("Empty param");
 		if (subscribers.contains(subscriber)) 
@@ -35,7 +35,7 @@ public class Material {
 		notifySubscriber(subscriber);
 	}
 	
-	public void unsubscribe(IDepartmentSubscriber subscriber) {
+	public void unsubscribe(DepartmentSubscriber subscriber) {
 		if (subscriber == null)
 			throw new NullPointerException("Empty param");
 		if (!subscribers.contains(subscriber))
@@ -45,13 +45,20 @@ public class Material {
 	}
 	
 		
-
-	public void insertMaterial(String s) {
-		MaterialList.add(String.valueOf(s));
+	public List<String> update() {
+		return materialList;
 	}
 	
-	public List<String> getAllMaterials() {
-		return MaterialList;
+	public void insert(String s) {
+		materialList.add(String.valueOf(s));
 	}
+	
+	
+	public void delete(Integer i) {
+		materialList.remove(i);
+	}
+	
+	
+	
 	
 }
