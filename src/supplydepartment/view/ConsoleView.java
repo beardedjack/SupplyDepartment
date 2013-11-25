@@ -1,41 +1,31 @@
 package supplydepartment.view;
 
-import supplydepartment.controller.MaterialController;
-import supplydepartment.controller.MaterialsController;
-import supplydepartment.controller.MaterialsController.*;
-import supplydepartment.model.Material;
-import supplydepartment.model.Supplier;
+import supplydepartment.model.*;
 
-class View<O, M, D> extends BaseView<Material> {
-	private final MaterialsController<O, M, D> c = new MaterialsController<O, M, D>();
-	protected void insert(D d) {
-		c.execute(MaterialsController.O.EDIT, getMaterial(), d);
-	}
-
+public class ConsoleView implements MaterialObserver {
 	
-	@Override
-	public void materialChanged(Material material) {
-	}
-	@Override
-	public void supplierChanged(Supplier supplier) {
-		
-		
-	}
-}
-
-
-public class ConsoleView {
-
-	public static void main(String[] args) {
-
-		View v = new View();
-		v.insert("sdcasd");
-
-		
-		
-
-	}
-
+	private String name;
+	private String supplier;
+	private float cost;
+	private Material material;
 	
+	public ConsoleView(Material material) {
+		
+		this.material = material;
+		material.registerObserver(this);
+	}
+
+	@Override
+	public void update(String name, String supplier, float cost) {
+		this.name = name;
+		this.supplier = supplier;
+		this.cost = cost;
+		displayData(String.format("Materials changed: %s - %s - %.1f", name, supplier, cost));
+		
+	}
+
+	public void displayData(String text) {
+		System.out.printf(text);
+	}
 
 }

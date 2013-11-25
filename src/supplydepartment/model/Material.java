@@ -1,64 +1,43 @@
 package supplydepartment.model;
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
+import java.util.List;
+import supplydepartment.model.MaterialObserver;
+import supplydepartment.model.MaterialObservable;
 
-import java.util.*;
+public class Material implements MaterialObservable {
 
-public class Material {
+	private List<MaterialObserver> materialObservers;
+	private String name;
+	private String supplier;
+	private float cost;
 	
-	////
-	
-	private List<String> materialList = new ArrayList<String>();
-	
-	////
-	
-	private final Collection<DepartmentSubscriber> subscribers = new CopyOnWriteArrayList<DepartmentSubscriber>();
-	
-	private void notifySubscriber(DepartmentSubscriber subscriber) {
-		assert subscriber != null;
-		subscriber.materialChanged(this);
+	public Material() {
+		materialObservers = new ArrayList<MaterialObserver>();
 	}
 	
-	protected void notifySubscribers() {
-		for (final DepartmentSubscriber subscriber: subscribers) 
-			notifySubscriber(subscriber);
-		
+	@Override
+	public void registerObserver(MaterialObserver o) {
+		materialObservers.add(o);
+	}
+	
+	@Override
+	public void removeObserver(MaterialObserver o) {
+		materialObservers.remove(o);
+	}
+	
+	@Override
+	public void notifyObservers() {
+		for (MaterialObserver observer : materialObservers) {
+			observer.update(name, supplier, cost);
+		}
+	}
+	
+	public void insertData(String name, String supplier, float cost) {
+		this.name = name;
+		this.supplier = supplier;
+		this.cost = cost;
+		notifyObservers();
 	}
 
-	public void subscribe(DepartmentSubscriber subscriber) {
-		if (subscriber == null) 
-			throw new NullPointerException("Empty param");
-		if (subscribers.contains(subscriber)) 
-			throw new IllegalArgumentException("Re-subscribe" + subscriber);
-		subscribers.add(subscriber);
-		notifySubscriber(subscriber);
-	}
-	
-	public void unsubscribe(DepartmentSubscriber subscriber) {
-		if (subscriber == null)
-			throw new NullPointerException("Empty param");
-		if (!subscribers.contains(subscriber))
-			throw new IllegalArgumentException("Unknown subscriber: " +
-					subscriber);
-		subscribers.remove(subscriber);
-	}
-	
-		
-	public List<String> update() {
-		return materialList;
-	}
-	
-	public void insert(String s) {
-		materialList.add(String.valueOf(s));
-	}
-	
-	
-	public void delete(Integer i) {
-		materialList.remove(i);
-	}
-	
-	
-	
-	
 }
