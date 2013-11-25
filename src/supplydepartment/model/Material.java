@@ -29,7 +29,7 @@ public class Material implements MaterialObservable {
 	@Override
 	public void notifyObservers() {
 		for (MaterialObserver observer : materialObservers) {
-			observer.update(name, supplier, cost);
+			observer.materialUpdate(name, supplier, cost);
 		}
 	}
 	

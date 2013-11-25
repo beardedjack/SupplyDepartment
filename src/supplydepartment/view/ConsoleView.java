@@ -2,28 +2,47 @@ package supplydepartment.view;
 
 import supplydepartment.model.*;
 
-public class ConsoleView implements MaterialObserver {
+public class ConsoleView implements MaterialObserver, SupplierObserver {
 	
-	private String name;
-	private String supplier;
-	private float cost;
+	private String materialName;
+	private String supplierName;
+	private float materialCost;
+	
+	private String suppliername;
+	private String currentAccount;
+	private String contactPerson;
+	
 	private Material material;
+	private Supplier supplier;
 	
-	public ConsoleView(Material material) {
+	public ConsoleView(Material material, Supplier supplier) {
 		
 		this.material = material;
+		this.supplier = supplier;
 		material.registerObserver(this);
+		supplier.registerObserver(this);
 	}
 
 	@Override
-	public void update(String name, String supplier, float cost) {
-		this.name = name;
-		this.supplier = supplier;
-		this.cost = cost;
-		displayData(String.format("Materials changed: %s - %s - %.1f", name, supplier, cost));
+	public void materialUpdate(String name, String supplier, float cost) {
+		this.materialName = name;
+		this.supplierName = supplier;
+		this.materialCost = cost;
+		displayData(String.format("Materials changed: %s - %s - %.1f \n", name, supplier, cost));
 		
 	}
 
+	@Override
+	public void supplierUpdate(String name, String account, String person) {
+		this.suppliername = name;
+		this.currentAccount = account;
+		this.contactPerson = person;
+		displayData(String.format("Supplier changed: %s - %s - %s \n", name, account, person));
+		
+	}
+
+	
+	
 	public void displayData(String text) {
 		System.out.printf(text);
 	}
