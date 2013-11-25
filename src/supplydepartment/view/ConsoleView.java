@@ -2,6 +2,8 @@ package supplydepartment.view;
 
 import supplydepartment.model.*;
 
+
+
 public class ConsoleView implements MaterialObserver, SupplierObserver {
 	
 	private String materialName;

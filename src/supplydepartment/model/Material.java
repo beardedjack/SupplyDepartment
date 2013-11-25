@@ -2,10 +2,15 @@ package supplydepartment.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import supplydepartment.model.MaterialObserver;
 import supplydepartment.model.MaterialObservable;
 
-public class Material implements MaterialObservable {
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Material implements MaterialObservable, Serializable {
 
 	private List<MaterialObserver> materialObservers;
 	private String name;
@@ -40,4 +45,6 @@ public class Material implements MaterialObservable {
 		notifyObservers();
 	}
 
+	
+	
 }
