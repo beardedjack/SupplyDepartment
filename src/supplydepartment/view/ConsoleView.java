@@ -1,6 +1,9 @@
 package supplydepartment.view;
 
+import java.util.ArrayList;
+
 import supplydepartment.model.*;
+
 
 
 
@@ -43,8 +46,16 @@ public class ConsoleView implements MaterialObserver, SupplierObserver {
 		
 	}
 
+	/*
+	public void printMaterials() {
+		
+		for (MaterialData p : md) {
+			displayData(String.format("%s - %s - %.1f \n", p.name, p.supplier, p.cost));
+		}
+	}
+	*/
 	
-	
+		
 	public void displayData(String text) {
 		System.out.printf(text);
 	}
