@@ -13,9 +13,11 @@ public class Material implements MaterialObservable {
 	
 	
 	private List<MaterialObserver> materialObservers;
+	
 	private String name;
 	private String supplier;
 	private float cost;
+	
 	private MaterialData md;
 	
 	
@@ -71,6 +73,7 @@ public class Material implements MaterialObservable {
 		md.load();
 		notifyObservers();
 	}
+	
 	
 	
 }
