@@ -1,43 +1,21 @@
 package supplydepartment.model;
 
 import java.util.ArrayList;
-import java.util.List;
-import supplydepartment.model.SupplierObserver;
-import supplydepartment.model.SupplierObservable;
 
-public class Supplier implements SupplierObservable {
+public class Supplier {
 
-	private List<SupplierObserver> supplierObservers;
-	private String name;
-	private String account;
-	private String person;
+	public int supplierID;
+	public String supplierName;
+	public String supplierAccount;
+	public String supplierPerson;
 	
-	public Supplier() {
-		supplierObservers = new ArrayList<SupplierObserver>();
+	public Supplier(int id, String name, String account, String person) {
+		this.supplierID = id;
+		this.supplierName = name;
+		this.supplierAccount = account;
+		this.supplierPerson = person;
+		
 	}
 	
-	@Override
-	public void registerObserver(SupplierObserver o) {
-		supplierObservers.add(o);
-	}
-	
-	@Override
-	public void removeObserver(SupplierObserver o) {
-		supplierObservers.remove(o);
-	}
-	
-	@Override
-	public void notifyObservers() {
-		for (SupplierObserver observer : supplierObservers) {
-			observer.supplierUpdate(name, account, person);
-		}
-	}
-	
-	public void insertData(String name, String account, String person) {
-		this.name = name;
-		this.account = account;
-		this.person = person;
-		notifyObservers();
-	}
 	
 }

@@ -1,6 +1,6 @@
 package supplydepartment.model;
 
-import supplydepartment.model.Material;
+import supplydepartment.model.Supplier;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,38 +10,37 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MaterialList implements Serializable {
+public class SupplierList implements Serializable {
 	
-	private ArrayList<Material> ml;
+	private ArrayList<Supplier> sl;
 	
-	public MaterialList() {
-		ml = new ArrayList<Material>();
+	public SupplierList() {
+		sl = new ArrayList<Supplier>();
+	}
+
+	public void addSupplier(Supplier s) {
+		sl.add(s);
 	}
 	
-	public void addMaterial(Material m) {
-		ml.add(m);
+	public void removeSupplier(int i) {
+		sl.remove(i);
 	}
 	
-	public void removeMaterial(int i) {
-		
-		ml.remove(i);
+	public void setSupplier(int i, Supplier s) {
+		sl.set(i, s);
 	}
 	
-	public void setMaterial(int i, Material m) {
-		ml.set(i, m);
+	public Supplier getSupplier(int i) {
+		return sl.get(i);
 	}
 	
-	public Material getMaterial(int i) {
-		return ml.get(i);
-	}
-	
-	public void saveMaterials() throws IOException {
+	public void saveSuppliers() throws IOException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
-			fos = new FileOutputStream("Materials.dat");
+			fos = new FileOutputStream("Suppliers.dat");
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(ml);
+			oos.writeObject(sl);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -51,13 +50,13 @@ public class MaterialList implements Serializable {
 		}
 	}
 	
-	public void loadMaterials() throws IOException {
+	public void loadSuppliers() throws IOException {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		try {
-			fis = new FileInputStream("Materials.dat");
+			fis = new FileInputStream("Suppliers.dat");
 			ois = new ObjectInputStream(fis);
-			ml = (ArrayList<Material>)ois.readObject();
+			sl = (ArrayList<Supplier>)ois.readObject();
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
