@@ -52,7 +52,7 @@ public class MaterialList implements Serializable {
 		String mname;
 		int msupid;
 		float mcost;
-		cv.displayData("ddasdasdASDAsd");
+		//cv.displayData("ddasdasdASDAsd");
 		
 		while (i.hasNext()) {
 			

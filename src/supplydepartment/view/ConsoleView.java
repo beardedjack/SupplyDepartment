@@ -13,155 +13,6 @@ import java.nio.CharBuffer;
 import supplydepartment.controller.*;
 import supplydepartment.model.*;
 
-class MainMenu {
-	void mainMenu() throws IOException {
-		BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
-//		BufferedWriter o = new BufferedWriter(new OutputStreamWriter(System.out));
-		PrintWriter o = new PrintWriter(System.out, true);
-		char choice;
-		o.println("======================= Supply Department =========================");
-		o.println("Usage:\n ''1'' - materials menu\n ''2'' - suppliers menu\n ''3'' - exit\n");
-		
-		do {
-			o.println("Enter a choice:");
-			choice = (char) i.read();
-		}
-		while (choice < '1' || choice > '3');
-		
-		
-		
-		switch (choice) {
-		case '1':
-			new MaterialsMenu().materialsMenu();
-			break;
-		}
-		
-	}
-}
-
-//////////////////////////////////////////////////////////////////
-
-class MaterialsMenu {
-	BufferedReader i;
-	PrintWriter o;
-	char choice;
-	
-	public MaterialsMenu() {
-		i = new BufferedReader(new InputStreamReader(System.in));
-		o = new PrintWriter(System.out, true);
-	}
-	
-	void materialsMenu() throws IOException {
-		
-		while (true) {
-		
-		materialsmenu: {
-		
-		o.println("======================= Materials menu =========================");
-		o.println("Usage:\n ''1'' - show materials\n ''2'' - add material\n ''3'' - edit material\n "
-				+ "''4'' - delete material\n ''5'' - save materials to file\n "
-				+ "''6'' - load materials from file\n ''7'' - return to main menu\n");
-		
-		do {
-			o.println("Enter a choice:");
-			choice = (char) i.read();
-		}
-		while (choice < '1' || choice > '7');
-		
-		switch (choice) {
-		case '1':
-			o.println("Materials:");	
-			new ConsoleView().getSdc().showMaterials();
-			break materialsmenu;
-		case '2':
-			addMaterial();
-			break;
-		case '3':
-			editMaterial();
-			break;
-		case '4':
-			deleteMaterial();
-			break;
-		case '5':
-			saveMaterials();
-			break;
-		case '6':
-			loadMaterials();
-			break;
-		case '7':
-			new MainMenu().mainMenu();
-			break;
-		}
-	
-	}	
-	
-	}	
-		
-	}
-	
-	void showMaterials() throws IOException {
-		
-		/*
-		o.println("Materials:");	
-		
-		new ConsoleView().getSdc().showMaterials();
-		*/
-		
-		
-	}
-	
-	void addMaterial() {
-		
-	}
-	
-	void editMaterial() {
-		
-	}
-	
-	void deleteMaterial() {
-		
-	}
-	
-	void saveMaterials() {
-		
-	}
-	
-	void loadMaterials() {
-		
-	}
-	
-	
-}
-
-//////////////////////////////////////////////////////////////////
-
-class SuppliersMenu {
-	BufferedReader i;
-	PrintWriter o;
-	char choice;
-	public SuppliersMenu() {
-		i = new BufferedReader(new InputStreamReader(System.in));
-		o = new PrintWriter(System.out, true);
-	}
-	
-	void materialsMenu() throws IOException {
-		o.println("======================= Suppliers menu =========================");
-		o.println("Usage:\n ''1'' - show suppliers\n ''2'' - add supplier\n ''3'' - edit supplier\n "
-				+ "''4'' - delete supplier\n ''5'' - save supplierss to file\n "
-				+ "''6'' - load supplierss from file\n ''7'' - return to main menu\n");
-		
-		do {
-			o.println("Enter a choice:");
-			choice = (char) i.read();
-		}
-		while (choice < '1' || choice > '7');
-		
-		
-	}
-}
-
-//////////////////////////////////////////////////////////////////
-
 public class ConsoleView {
 	
 	
@@ -171,11 +22,111 @@ public class ConsoleView {
 	
 	
 	
-	public static void main(String[] args) throws IOException  {
+	public static void main(String[] args) throws IOException, ClassNotFoundException  {
 		
 		setSdc(new SupplyDepartmentController(new ConsoleView()));
-		new MainMenu().mainMenu();
-		}
+		
+		BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
+//		BufferedWriter o = new BufferedWriter(new OutputStreamWriter(System.out));
+		PrintWriter o = new PrintWriter(System.out, true);
+		char choice;
+		
+		int materialID;
+		String materialName;
+		int materialSupplierID;
+		float materialCost;
+		
+		
+		MainMenu: {
+			while (true) {
+				o.println("======================= Supply Department =========================");
+				o.println("Usage:\n ''1'' - materials menu\n ''2'' - suppliers menu\n ''3'' - exit\n"
+						+ "===================================================================");
+				
+				
+				do {
+					o.println("Enter a choice:");
+					choice = (char) i.read();
+				}
+				while (choice < '1' || choice > '3');
+				o.flush();
+				
+				
+				switch (choice) {
+				case '1':
+					MaterialsMenu: {
+						while (true) {
+							o.println("======================= Materials menu =========================");
+							o.println("Usage:\n ''1'' - show materials\n ''2'' - add material\n ''3'' - edit material\n "
+										+ "''4'' - delete material\n ''5'' - save materials to file\n "
+										+ "''6'' - load materials from file\n ''7'' - return to main menu\n"
+										+ "================================================================");
+						
+							do {
+								o.println("Enter a choice:");
+								choice = (char) i.read();
+							}
+							while (choice < '1' || choice > '7');
+							o.flush();
+							
+							
+							switch (choice) {
+							case '1':
+								o.println("Materials:");	
+								sdc.showMaterials();
+								break;
+							case '2':
+								o.println("Adding material:");
+								o.println("Material ID?");
+								materialID = i.read();
+								o.println("Material Name?");
+								materialName = i.readLine();
+								o.println("Material Supplier ID?");
+								materialSupplierID = i.read();
+								o.println("Material cost?");
+								materialCost = (float)i.read();
+								
+								sdc.insertMaterial(materialID, materialName, materialSupplierID, materialCost);
+								
+								break;
+							case '3':
+								
+								break;
+							case '4':
+								
+								break;
+							case '5':
+								sdc.saveMaterials();
+								break;
+							case '6':
+								sdc.loadMaterials();
+								break;
+							case '7':
+								break MaterialsMenu;
+							}
+							
+							
+							
+							
+							
+							
+						}
+					} // MainMenu = 1
+					break;
+					
+				case '2':
+					SuppliersMenu: {
+					
+					} // MaiMenu = 2;
+				
+				case '3': break MainMenu;
+				
+				
+				} // choice MainMenu
+			}
+		} // MainMenu
+		
+	}
 	
 	public void displayData(String text) {
 		System.out.println(text);
