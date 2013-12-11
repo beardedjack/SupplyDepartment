@@ -1,7 +1,10 @@
 package supplydepartment.controller;
 
 import java.io.IOException;
+import java.util.ListIterator;
 
+import sun.org.mozilla.javascript.ObjToIntMap.Iterator;
+import sun.security.util.Length;
 import supplydepartment.model.*;
 import supplydepartment.view.*;
 
@@ -10,6 +13,11 @@ public class SupplyDepartmentController {
 	private SupplierList supplier;
 	private ConsoleView view;
 	
+	public SupplyDepartmentController(ConsoleView view) {
+		this.material = new MaterialList(view);
+		this.supplier = new SupplierList();
+		this.view = view;
+	}
 	
 	
 	public SupplyDepartmentController(MaterialList material, SupplierList supplier, ConsoleView view) {
@@ -26,17 +34,22 @@ public class SupplyDepartmentController {
 	
 	public void editMaterial(int i, int id, String name, int supplier, float cost) {
 		Material m = material.getMaterial(i);
-		m.materialID = id;
-		m.materialName = name;
-		m.materialSupplierID = supplier;
-		m.materialCost = cost;
+		m.setMaterialID(id);
+		m.setMaterialName(name);
+		m.setMaterialSupplierID(supplier);
+		m.setMaterialCost(cost);
 		this.material.setMaterial(i, m);
 		view.displayData("Material updated!");
 	}
 	
 	public void showMaterial(int i) {
 		Material m = material.getMaterial(i);
-		view.displayData((m.materialID + " " + m.materialName + " " + m.materialCost).toString());
+		view.displayData((m.getMaterialID() + " " + m.getMaterialName() + " " + m.getMaterialCost()).toString());
+	}
+	
+	public void showMaterials() {
+		material.showMaterials();
+		
 	}
 	
 	public void deleteMaterial(int i) {
@@ -49,7 +62,7 @@ public class SupplyDepartmentController {
 		view.displayData("Materials saved!");
 	}
 	
-	public void loadMaterials() throws IOException {
+	public void loadMaterials() throws IOException, ClassNotFoundException {
 		material.loadMaterials();
 		view.displayData("Materials loaded!");
 	}

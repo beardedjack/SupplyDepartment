@@ -11,6 +11,7 @@ import supplydepartment.view.*;
 
 public class Main {
 
+	/*
 	public static void main(String[] args) throws IOException {
 		MaterialList m = new MaterialList();
 		SupplierList s = new SupplierList();
@@ -21,4 +22,5 @@ public class Main {
 		sdc.saveMaterials();
 
 	}
+	*/
 }
