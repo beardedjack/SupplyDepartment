@@ -12,12 +12,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 
 public class MaterialList implements Serializable {
 		
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Material> ml;
+	private List<Material> ml;
 	private ConsoleView cv;
 	
 	public MaterialList(ConsoleView c) {
@@ -46,28 +47,25 @@ public class MaterialList implements Serializable {
 	public void showMaterials() {
 		ListIterator<Material> i = ml.listIterator();
 		
-		Material m = null;
+		//Material m = null;
 		
 		int mid;
 		String mname;
 		int msupid;
 		float mcost;
-		//cv.displayData("ddasdasdASDAsd");
-		
-		while (i.hasNext()) {
-			
+	
+		int n = 0;
+		cv.displayData(("Material Num\tMaterialID\tMaterial Name\tSupplier ID\tMaterial Cost\n").toString());
+		for (Material m : ml) {
 			mid = m.getMaterialID();
 			mname = m.getMaterialName();
 			msupid = m.getMaterialSupplierID();
 			mcost = m.getMaterialCost();
-			
-			cv.displayData((mid + mname + msupid + mcost).toString());
-			
-			m = i.next();
-			
-			
+			     
+			cv.displayData((n + "\t\t" + mid + "\t\t" + mname + "\t" + msupid + "\t\t" + mcost).toString());
+			n++;
 		}
-		
+
 	}
 	
 	

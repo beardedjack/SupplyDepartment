@@ -15,7 +15,7 @@ public class SupplyDepartmentController {
 	
 	public SupplyDepartmentController(ConsoleView view) {
 		this.material = new MaterialList(view);
-		this.supplier = new SupplierList();
+		this.supplier = new SupplierList(view);
 		this.view = view;
 	}
 	
@@ -44,7 +44,7 @@ public class SupplyDepartmentController {
 	
 	public void showMaterial(int i) {
 		Material m = material.getMaterial(i);
-		view.displayData((m.getMaterialID() + " " + m.getMaterialName() + " " + m.getMaterialCost()).toString());
+		view.displayData((i + "\t" + m.getMaterialID() + "\t" + m.getMaterialName() + "\t" + m.getMaterialCost()).toString());
 	}
 	
 	public void showMaterials() {
@@ -73,19 +73,23 @@ public class SupplyDepartmentController {
 		view.displayData("Supplier added!");
 	}
 	
-	public void editMaterial(int i, int id, String name, String account, String person) {
+	public void editSupplier(int i, int id, String name, String account, String person) {
 		Supplier s = supplier.getSupplier(i);
-		s.supplierID = id;
-		s.supplierName = name;
-		s.supplierAccount = account;
-		s.supplierPerson = person;
+		s.setSupplierID(id);
+		s.setSupplierName(name);
+		s.setSupplierAccount(account);
+		s.setSupplierPerson(person);
 		this.supplier.setSupplier(i, s);
 		view.displayData("Supplier updated!");
 	}
 	
 	public void showSupplier(int i) {
 		Supplier s = supplier.getSupplier(i);
-		view.displayData((s.supplierID + " " + s.supplierName + " " + s.supplierAccount + " " + s.supplierPerson).toString());
+		view.displayData((i + "\t" + s.getSupplierID() + "\t" + s.getSupplierName() + "\t" + s.getSupplierAccount() + "\t" + s.getSupplierPerson()).toString());
+	}
+	
+	public void showSuppliers() {
+		supplier.showSuppliers();
 	}
 	
 	public void deleteSupplier(int i) {

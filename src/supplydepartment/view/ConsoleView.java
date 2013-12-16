@@ -9,7 +9,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.CharBuffer;
+import java.util.Scanner;
 
+import sun.org.mozilla.javascript.regexp.SubString;
 import supplydepartment.controller.*;
 import supplydepartment.model.*;
 
@@ -26,10 +28,14 @@ public class ConsoleView {
 		
 		setSdc(new SupplyDepartmentController(new ConsoleView()));
 		
-		BufferedReader i = new BufferedReader(new InputStreamReader(System.in));
+		Scanner i = new Scanner(System.in);
+		
+//		BufferedReader ir = new BufferedReader(new InputStreamReader(System.in));
 //		BufferedWriter o = new BufferedWriter(new OutputStreamWriter(System.out));
-		PrintWriter o = new PrintWriter(System.out, true);
+//		PrintWriter o = new PrintWriter(System.out, true);
 		char choice;
+		
+		int n;
 		
 		int materialID;
 		String materialName;
@@ -39,61 +45,74 @@ public class ConsoleView {
 		
 		MainMenu: {
 			while (true) {
-				o.println("======================= Supply Department =========================");
-				o.println("Usage:\n ''1'' - materials menu\n ''2'' - suppliers menu\n ''3'' - exit\n"
-						+ "===================================================================");
+				System.out.println("_______________________ Supply Department _________________________");
+				System.out.println("Usage:\n ''1'' - materials menu\n ''2'' - suppliers menu\n ''3'' - exit\n"
+								 + "___________________________________________________________________");
 				
 				
 				do {
-					o.println("Enter a choice:");
-					choice = (char) i.read();
+					System.out.println("Enter a choice:");
+					
+					
+					choice = (i.next()).charAt(0);
 				}
 				while (choice < '1' || choice > '3');
-				o.flush();
+				
 				
 				
 				switch (choice) {
 				case '1':
 					MaterialsMenu: {
 						while (true) {
-							o.println("======================= Materials menu =========================");
-							o.println("Usage:\n ''1'' - show materials\n ''2'' - add material\n ''3'' - edit material\n "
+							System.out.println("_______________________ Materials menu _________________________");
+							System.out.println("Usage:\n ''1'' - show materials\n ''2'' - add material\n ''3'' - edit material\n "
 										+ "''4'' - delete material\n ''5'' - save materials to file\n "
 										+ "''6'' - load materials from file\n ''7'' - return to main menu\n"
-										+ "================================================================");
+										     + "________________________________________________________________");
 						
 							do {
-								o.println("Enter a choice:");
-								choice = (char) i.read();
+								System.out.println("Enter a choice:");
+								choice = (i.next()).charAt(0);
 							}
 							while (choice < '1' || choice > '7');
-							o.flush();
-							
-							
+
 							switch (choice) {
 							case '1':
-								o.println("Materials:");	
+								System.out.println("Materials:");	
 								sdc.showMaterials();
 								break;
 							case '2':
-								o.println("Adding material:");
-								o.println("Material ID?");
-								materialID = i.read();
-								o.println("Material Name?");
-								materialName = i.readLine();
-								o.println("Material Supplier ID?");
-								materialSupplierID = i.read();
-								o.println("Material cost?");
-								materialCost = (float)i.read();
-								
+								System.out.print("Adding material:\n");
+								System.out.print("Material ID?:\n");
+								materialID = i.nextInt();
+								System.out.print("Material Name?:\n");
+								materialName = i.next();
+								System.out.print("Material Supplier ID?:\n");
+								materialSupplierID = i.nextInt();
+								System.out.print("Material cost?:\n");
+								materialCost = i.nextFloat();
 								sdc.insertMaterial(materialID, materialName, materialSupplierID, materialCost);
-								
 								break;
 							case '3':
-								
+								System.out.print("Editing material:\n MaterialNum?: \n");
+								n = i.nextInt();
+								System.out.print("Old Material Data:\nMaterial Num\tMaterialID\tMaterial Name\tSupplierID\tMaterialCost\n");
+								sdc.showMaterial(n);
+								System.out.print("New Material Data:\n");
+								System.out.print("MaterialID?: \n");
+								materialID = i.nextInt();
+								System.out.print("Material Name?:\n");
+								materialName = i.next();
+								System.out.print("Material Supplier ID?:\n");
+								materialSupplierID = i.nextInt();
+								System.out.print("Material cost?:\n");
+								materialCost = i.nextFloat();
+								sdc.editMaterial(n, materialID, materialName, materialSupplierID, materialCost);
 								break;
 							case '4':
-								
+								System.out.print("Deleting material:\n MaterialNum?: \n");
+								n = i.nextInt();
+								sdc.deleteMaterial(n);
 								break;
 							case '5':
 								sdc.saveMaterials();
@@ -104,12 +123,6 @@ public class ConsoleView {
 							case '7':
 								break MaterialsMenu;
 							}
-							
-							
-							
-							
-							
-							
 						}
 					} // MainMenu = 1
 					break;

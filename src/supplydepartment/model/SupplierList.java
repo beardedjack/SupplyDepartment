@@ -1,6 +1,7 @@
 package supplydepartment.model;
 
 import supplydepartment.model.Supplier;
+import supplydepartment.view.ConsoleView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,13 +10,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SupplierList implements Serializable {
 	
-	private ArrayList<Supplier> sl;
+	private static final long serialVersionUID = 2L;
+	private List<Supplier> sl;
+	private ConsoleView cv;
 	
-	public SupplierList() {
+	
+	public SupplierList(ConsoleView c) {
 		sl = new ArrayList<Supplier>();
+		this.cv = c;
 	}
 
 	public void addSupplier(Supplier s) {
@@ -33,6 +39,26 @@ public class SupplierList implements Serializable {
 	public Supplier getSupplier(int i) {
 		return sl.get(i);
 	}
+	
+	
+	public void showSuppliers() {
+		int sid;
+		String sname;
+		String saccount;
+		String sperson;
+		
+		int n = 0;
+		cv.displayData(("Supplier Num\tSupplierID\tSupplier Name\tSupplier Acc\tSupplier Person\n").toString());
+		for (Supplier s : sl) {
+			sid = s.getSupplierID();
+			sname = s.getSupplierName();
+			saccount = s.getSupplierAccount();
+			sperson = s.getSupplierPerson();
+			cv.displayData((n + "\t\t" + sid + "\t\t" + sname + "\t" + saccount + "\t\t" + sperson).toString());
+			n++;
+		}
+	}
+	
 	
 	public void saveSuppliers() throws IOException {
 		FileOutputStream fos = null;
